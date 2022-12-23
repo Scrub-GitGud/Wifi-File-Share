@@ -1,33 +1,17 @@
 const {
     app,
     BrowserWindow,
-    ipcMain
+    ipcMain,
+    dialog
 } = require("electron")
-const path = require("path")
-const url = require("url")
-
-const net = require("net")
-const fs = require("fs")
-
-function sendFile(file = "./sender/file.pdf") {
-    let server, istream = fs.createReadStream(file);
-
-    server = net.createServer(socket => {
-        socket.pipe(process.stdout);
-        istream.on("readable", function () {
-            let data;
-            while (data = this.read()) {
-                socket.write(data);
-            }
-        })
-    })
-
-    server.listen(8000, '192.168.0.107');
-}
 
 let win
 
-function createWindow() {
+function createWindow(htmlFile = 'index.html') {
+
+    if(win) {
+        win.close()
+    }
     
     win = new BrowserWindow({
         width: 800,
@@ -38,9 +22,9 @@ function createWindow() {
         }
     })
 
-    win.webContents.openDevTools()
+    // win.webContents.openDevTools()
 
-    win.loadFile('index.html')
+    win.loadFile(htmlFile)
 
     win.on("closed", () => {
         win = null
@@ -49,7 +33,8 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
-    createWindow()
+    // createWindow()
+    createWindow('receive.html')
 })
 
 app.on('window-all-closed', () => {
@@ -57,7 +42,14 @@ app.on('window-all-closed', () => {
 })
 
 
-ipcMain.on('request-mainprocess-action', (event, arg) => {
-    console.log(arg);
-    sendFile()
+ipcMain.on('open-send-window', (event, arg) => {
+    createWindow('send.html')
+});
+
+ipcMain.on('open-receive-window', (event, arg) => {
+    createWindow('receive.html')
+});
+
+ipcMain.on('open-error-dialog', (event, arg) => {
+    dialog.showErrorBox("An error occurred!", arg)
 });

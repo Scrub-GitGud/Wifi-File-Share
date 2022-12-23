@@ -1,0 +1,30 @@
+<html lang="en">
+<head>
+    <script src="https://kit.fontawesome.com/f868734c05.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Fire Share</title>
+</head>
+<body>
+    
+    <div class="title">IP: <span id="ip">192.168.0.107</span></div>
+    <div id="send_file_container">
+        <input type="file" id="send_file" name="send_file" accept="image/png, image/jpeg">
+        <div id="send_file_label">
+            <label for="send_file">
+                <i class="fa fa-paper-plane"></i>
+                <div class="send_file_label_text">Select a file</div>
+            </label>
+        </div>
+    </div>
+    <div id="loading">
+        <div class="spinner-square">
+            <div class="square-1 square"></div>
+            <div class="square-2 square"></div>
+            <div class="square-3 square"></div>
+        </div>
+        <div id="loading_text">File sending...</div>
+    </div>
+
+    <script src="send.js"></script>
+</body>
+</html>

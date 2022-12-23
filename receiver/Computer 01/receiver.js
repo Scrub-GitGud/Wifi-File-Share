@@ -1,12 +1,11 @@
 const net = require("net")
 const fs = require("fs")
 
-let socket;
 
-function magic() {
-    socket = net.connect(8000, '192.168.0.107')
+function receive() {
+    let socket = net.connect(8000, '192.168.0.107')
 
-    let ostream = fs.createWriteStream("./receiver/file.png");
+    let ostream = fs.createWriteStream("./file.png");
     let date = new Date(),
         size = 0,
         elapsed;
@@ -23,4 +22,4 @@ function magic() {
     });
 }
 
-magic()
+receive()
