@@ -6,7 +6,7 @@ let socket;
 function magic() {
     socket = net.connect(8000, '192.168.0.107')
 
-    let ostream = fs.createWriteStream("./receiver/file.pdf");
+    let ostream = fs.createWriteStream("./receiver/file.png");
     let date = new Date(),
         size = 0,
         elapsed;

@@ -9,9 +9,7 @@ const url = require("url")
 const net = require("net")
 const fs = require("fs")
 
-function magic(file = "./sender/file.pdf") {
-    console.log("testing.....")
-    
+function sendFile(file = "./sender/file.pdf") {
     let server, istream = fs.createReadStream(file);
 
     server = net.createServer(socket => {
@@ -21,14 +19,6 @@ function magic(file = "./sender/file.pdf") {
             while (data = this.read()) {
                 socket.write(data);
             }
-        })
-        istream.on("end", function () {
-            socket.end();
-        })
-        socket.on("end", () => {
-            server.close(() => {
-                console.log("\nTransfer is done!")
-            });
         })
     })
 
@@ -69,5 +59,5 @@ app.on('window-all-closed', () => {
 
 ipcMain.on('request-mainprocess-action', (event, arg) => {
     console.log(arg);
-    magic()
+    sendFile()
 });
