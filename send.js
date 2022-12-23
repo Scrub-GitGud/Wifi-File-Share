@@ -1,6 +1,9 @@
 var os = require('os') // For getting IP
 const fs = require("fs")
 const net = require("net")
+const {
+    ipcRenderer
+} = require('electron');
 
 function sendFile(file = "./sender/op.png") {
     isSending()
@@ -18,8 +21,13 @@ function sendFile(file = "./sender/op.png") {
             socket.end();
             sendFile(file)
         })
+        socket.on('error', function (error) {
+            console.log("Error: ", error)
+            ipcRenderer.send('open-error-dialog', error.message);
+        });
         socket.on("end", () => {
             isNotSending()
+            ipcRenderer.send('open-msg-dialog', "File Sent.");
             server.close(() => {
                 console.log("\nTransfer is done!")
             });

@@ -9,10 +9,10 @@ let win
 
 function createWindow(htmlFile = 'index.html') {
 
-    if(win) {
+    if (win) {
         win.close()
     }
-    
+
     win = new BrowserWindow({
         width: 800,
         height: 600,
@@ -33,8 +33,7 @@ function createWindow(htmlFile = 'index.html') {
 }
 
 app.whenReady().then(() => {
-    // createWindow()
-    createWindow('receive.html')
+    createWindow()
 })
 
 app.on('window-all-closed', () => {
@@ -52,4 +51,13 @@ ipcMain.on('open-receive-window', (event, arg) => {
 
 ipcMain.on('open-error-dialog', (event, arg) => {
     dialog.showErrorBox("An error occurred!", arg)
+});
+
+ipcMain.on('open-msg-dialog', (event, arg) => {
+    dialog.showMessageBox({
+        type: 'info',
+        title: 'Success',
+        cancelId: 99,
+        message: arg,
+    })
 });
