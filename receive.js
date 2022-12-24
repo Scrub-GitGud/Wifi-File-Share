@@ -6,13 +6,13 @@ const {
 
 let socket;
 
-function receiveFile(ip = '192.168.0.107') {
+function receiveFile(ip = '192.168.0.107', file_name = "file.png") {
     socket = net.connect(8000, ip, () => {
         console.log('connected to server!');
         socket.write('client connected!\r\n');
     })
 
-    let ostream = fs.createWriteStream("./receiver/file.png");
+    let ostream = fs.createWriteStream(`./received_files/${file_name}`);
     let date = new Date()
     let size = 0
     let elapsed
@@ -35,7 +35,7 @@ function receiveFile(ip = '192.168.0.107') {
         let res = `\nFinished getting file. speed was: ${((size / (1024 * 1024)) / (elapsed / 1000)).toFixed(2)} MB/s`
         console.log(res);
         ipcRenderer.send('open-msg-dialog', res);
-        process.exit();
+        // process.exit();
     });
 
 }

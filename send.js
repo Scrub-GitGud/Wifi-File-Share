@@ -22,6 +22,7 @@ function sendFile(file = "./sender/op.png") {
             sendFile(file)
         })
         socket.on('error', function (error) {
+            isNotSending()
             console.log("Error: ", error)
             ipcRenderer.send('open-error-dialog', error.message);
         });
