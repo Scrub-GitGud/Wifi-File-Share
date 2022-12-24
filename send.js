@@ -91,7 +91,7 @@ for (var k in interfaces) {
         }
     }
 }
-console.log("IP", addresses[0]);
+console.log("IP", addresses);
 if(addresses[0]) {
     ip = addresses[0]
     ip_el.innerText = addresses[0]

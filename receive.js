@@ -9,6 +9,7 @@ let port = 8000
 let socket;
 
 function receiveFile(ip = '192.168.0.107', file_name = "file.png") {
+    console.log("Receiving from:", ip)
     socket = net.connect(port, ip, () => {
         console.log('connected to server!');
         socket.write('client connected!\r\n');
@@ -52,6 +53,7 @@ receiveBtn.addEventListener("click", function (event) {
     if (ipInput.value == '' || ipInput.value == null) {
         ipcRenderer.send('open-error-dialog', "Please enter the ip address");
     } else {
+        console.log(ipInput.value)
         receiveFile(ipInput.value, `${makeid(4)}.png`)
     }
 })
