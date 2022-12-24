@@ -5,6 +5,10 @@ const {
     ipcRenderer
 } = require('electron');
 
+// 192.168.48.180
+let ip = '192.168.0.107'
+let port = 8000
+
 function sendFile(file = "./sender/op.png") {
     isSending()
     let server
@@ -36,7 +40,7 @@ function sendFile(file = "./sender/op.png") {
         });
     })
 
-    server.listen(8000, '192.168.0.107');
+    server.listen(port, ip);
 }
 
 
@@ -88,7 +92,8 @@ for (var k in interfaces) {
     }
 }
 console.log("IP", addresses[0]);
-if(address[0]) {
-    ip_el.innerText = address[0]
+if(addresses[0]) {
+    ip = addresses[0]
+    ip_el.innerText = addresses[0]
 }
 //  ------------------------------- Getting IP ------------------------------

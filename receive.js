@@ -4,10 +4,12 @@ const {
     ipcRenderer
 } = require('electron');
 
+let port = 8000
+
 let socket;
 
 function receiveFile(ip = '192.168.0.107', file_name = "file.png") {
-    socket = net.connect(8000, ip, () => {
+    socket = net.connect(port, ip, () => {
         console.log('connected to server!');
         socket.write('client connected!\r\n');
     })
