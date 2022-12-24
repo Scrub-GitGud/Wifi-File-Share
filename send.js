@@ -7,7 +7,8 @@ const {
 
 function sendFile(file = "./sender/op.png") {
     isSending()
-    let server, istream = fs.createReadStream(file);
+    let server
+    let istream = fs.createReadStream(file)
 
     server = net.createServer(socket => {
         socket.pipe(process.stdout);
@@ -17,15 +18,10 @@ function sendFile(file = "./sender/op.png") {
                 socket.write(data);
             }
         })
+        
         istream.on("end", function () {
             socket.end();
-            sendFile(file)
         })
-        socket.on('error', function (error) {
-            isNotSending()
-            console.log("Error: ", error)
-            ipcRenderer.send('open-error-dialog', error.message);
-        });
         socket.on("end", () => {
             isNotSending()
             ipcRenderer.send('open-msg-dialog', "File Sent.");
@@ -33,6 +29,11 @@ function sendFile(file = "./sender/op.png") {
                 console.log("\nTransfer is done!")
             });
         })
+        socket.on('error', function (error) {
+            isNotSending()
+            console.log("Error: ", error)
+            ipcRenderer.send('open-error-dialog', error.message);
+        });
     })
 
     server.listen(8000, '192.168.0.107');

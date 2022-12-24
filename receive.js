@@ -50,6 +50,18 @@ receiveBtn.addEventListener("click", function (event) {
     if (ipInput.value == '' || ipInput.value == null) {
         ipcRenderer.send('open-error-dialog', "Please enter the ip address");
     } else {
-        receiveFile(ipInput.value)
+        receiveFile(ipInput.value, `${makeid(4)}.png`)
     }
 })
+
+
+
+function makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
